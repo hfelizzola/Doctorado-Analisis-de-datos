@@ -1,0 +1,36 @@
+---
+title: "Análisis de Contratistas"
+output: 
+  html_notebook: 
+    toc: yes
+---
+
+```{r librerias, include=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(lubridate)
+library(DT)
+library(plotly)
+library(data.table)
+```
+
+
+```{r carga de datos, include=FALSE}
+df <- fread(input = "SECOP_IPS_LIMPIA.csv")
+```
+
+# Estadísticas generales de contratistas
+
+```{r}
+contratistas <- df %>% 
+  group_by(id_contratista) %>% 
+  summarise(total = n(),
+            cuantia = sum(valor_total),
+            familias = n_distinct(nombre_familia), 
+            entidades = n_distinct(nombre_entidad), 
+            procesos = n_distinct(tipo_contrato))
+```
+
+
+
+
